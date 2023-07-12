@@ -1,0 +1,34 @@
+{% extends "giffy_app/base.html" %}
+
+{% block content %}
+<main>
+  {% for image in images %}
+  {% include 'giffy_app/image.html' %}
+  {% endfor%}
+</main>
+{% endblock content %}
+
+<script>
+  const deleteButtons = document.getElementsByClassName('delete-button');
+Array.from(deleteButtons).forEach(button => {
+  button.addEventListener('click', function() {
+    const imageId = button.getAttribute('data-image-id');
+    fetch(`https://api.example.com/images/${imageId}`, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log('Image deleted successfully.');
+          // Additional logic or UI updates after successful deletion
+        } else {
+          console.error('Error deleting image.');
+          // Handle error or display error message
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+});
+
+</script>

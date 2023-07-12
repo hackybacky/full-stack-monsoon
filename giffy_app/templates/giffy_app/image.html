@@ -1,0 +1,41 @@
+
+
+    <article class="centered ">
+
+      <img src="{{ image.image.url }}" class ="image-link"/>
+      <div class="image-details" style="display: none;">
+        {{image.title}}
+        </br  >
+        {{image.description}}
+          <button id = "delete-button" data-image-id={{image.id}}>delete</button>
+      </div>
+
+    </article>
+
+
+<script>
+  const imageLink = document.querySelector('.image-link');
+  const imageDetails = document.querySelector('.image-details');
+
+  imageLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    imageDetails.style.display = imageDetails.style.display === 'none' ? 'grid' : 'none';
+  });
+  const apiButton = document.getElementById('apiButton');
+
+    apiButton.addEventListener('click', function() {
+      // Make API request here
+      const imageId = apiButton.getAttribute('data-image-id');
+      console.log((imageId));
+      fetch(`http://127.0.0.1:8000/image/`, {method:'DELETE',})
+        .then(response => response.json())
+        .then(data => {
+          // Process the API response data
+          console.log(data);
+        })
+        .catch(error => {
+          // Handle any errors
+          console.error('Error:', error);
+        });
+    });
+</script>
